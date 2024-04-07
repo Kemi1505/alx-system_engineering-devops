@@ -1,0 +1,1 @@
+Write shell script permissions
