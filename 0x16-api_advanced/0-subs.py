@@ -1,16 +1,17 @@
 #!/usr/bin/python3
-"""Function to check total subscribers for a given Reddit subreddit."""
+"""
+Functions to check the total subscribers for a given Reddit subreddit
+"""
+
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """Returns the numbers of subscribers for a given subreddit."""
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {
-        "User-Agent": "0x16.api.advanced:v1.0.0"
-    }
-    response = requests.get(url, headers=headers, allow_redirects=False)
-    if response.status_code == 404:
+    """Returns the number of subscribers for a given subreddit"""
+    if subreddit is None or type(subreddit) is not str:
         return 0
-    results = response.json().get("data")
-    return results.get("subscribers")
+    r = requests.get('http://www.reddit.com/r/{}/about.json'.format(subreddit),
+                     headers={'User-Agent': '0x16-api_advanced:project:\
+v1.0.0 (by /u/firdaus_cartoon_jr)'}).json()
+    subs = r.get("data", {}).get("subscribers", 0)
+    return subs
